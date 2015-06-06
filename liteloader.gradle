@@ -4,13 +4,16 @@ apply plugin: 'net.minecrell.vanilla.base'
 apply from: file('../gradle/minecraft.gradle')
 
 dependencies {
-    compile project(':common')
+    compile project(':client')
 }
 
 sourceSets {
     main {
         java {
-            srcDir '../LiteLoader/LiteLoader/trunk/java/client'
+            srcDir 'LiteLoader/trunk/debug'
+        }
+        resources {
+            srcDir 'LiteLoader/trunk/resources'
         }
     }
 }

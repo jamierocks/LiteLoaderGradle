@@ -15,26 +15,9 @@ buildscript {
     }
 }
 apply plugin: 'java'
-apply plugin: 'net.minecrell.vanilla.base'
 
-minecraft {
-    version = '1.8'
-    mappings = 'snapshot_nodoc_20150527'
-}
-
-dependencies {
-    compile project(':client')
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir 'LiteLoader/LiteLoader/trunk/debug'
-        }
-        resources {
-            srcDir 'LiteLoader/LiteLoader/trunk/resources'
-        }
-    }
+project('LiteLoader') {
+    apply from: rootProject.file('liteloader.gradle')
 }
 
 task wrapper(type: Wrapper) {
