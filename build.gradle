@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
         maven {
             name = 'forge'
             url = 'http://files.minecraftforge.net/maven'
@@ -12,6 +13,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecrell:VanillaGradle:1.0.1-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
     }
 }
 plugins {

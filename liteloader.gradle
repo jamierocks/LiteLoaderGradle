@@ -1,18 +1,17 @@
 apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'net.minecrell.vanilla.base'
 
 apply from: file('../gradle/minecraft.gradle')
 
-configurations {
-    shadow
-}
-
 dependencies {
-    shadow project(':client')
+    compile project(':client')
 }
 
 shadowJar {
-    configurations = [project.configurations.shadow]
+    dependencies {
+        include project(':client')
+    }
 
     classifier ''
 }

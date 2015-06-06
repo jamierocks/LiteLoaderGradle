@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'net.minecrell.vanilla.base'
 
 apply from: file('../gradle/minecraft.gradle')
