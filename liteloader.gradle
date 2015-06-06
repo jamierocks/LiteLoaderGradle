@@ -19,6 +19,7 @@ buildscript {
     }
 }
 apply plugin: 'net.minecrell.vanilla.base'
+apply plugin: 'maven-publish'
 
 group = 'com.mumfrey'
 archivesBaseName = 'LiteLoader'
@@ -117,6 +118,23 @@ task jarDoc(type:Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 
     classifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar
+
+            repositories {
+                maven {
+                    url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?:
+                            "$buildDir/repo"
+                }
+            }
+        }
+    }
 }
 
 artifacts.archives jarMcp, jarSrc, jarDoc
