@@ -19,16 +19,17 @@ apply plugin: 'net.minecrell.vanilla.base'
 
 minecraft {
     version = '1.8'
+    mappings = 'snapshot_nodoc_20150527'
+}
+
+dependencies {
+    compile project(':common')
 }
 
 sourceSets {
     main {
         java {
-            srcDir 'LiteLoader/LiteLoader/trunk/java/client'
+            srcDir '../LiteLoader/LiteLoader/trunk/java/client'
         }
     }
-}
-
-dependencies {
-    compile project(':common')
 }

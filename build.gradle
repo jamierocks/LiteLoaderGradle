@@ -19,6 +19,11 @@ apply plugin: 'net.minecrell.vanilla.base'
 
 minecraft {
     version = '1.8'
+    mappings = 'snapshot_nodoc_20150527'
+}
+
+dependencies {
+    compile project(':client')
 }
 
 sourceSets {
@@ -32,7 +37,6 @@ sourceSets {
     }
 }
 
-dependencies {
-    compile project(':client')
-    compile project(':common')
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
 }
