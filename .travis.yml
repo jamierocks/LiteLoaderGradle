@@ -1,0 +1,16 @@
+sudo: false
+language: java
+jdk:
+  - openjdk6
+  - openjdk7
+  - oraclejdk7
+  - oraclejdk8
+env:
+  global:
+    - LEX_DEPLOY=https://github.com/LexBot/Deploy.git DEPLOY_ROOT=/tmp/lex/deploy
+    - GIT_REPO=git@github.com:jamierocks/Repo.git
+    - secure: "fU8vcOd/TVoKSXtH5Dzx6/vl0zH+px6kKECcItEoNpw/CUjuSroDKCdg7fwP06HFRXmqbBDOaPI5swJLCF63ZcwaG3WxdReZbpdZfNGtvlXSYq0pNaUp7fOrpOtKrQkaaI5FvgvTHYPn+vL69kkYRkCSe/uz+9w94DosQfj3+eBiCEDDbKjAbGmLgr1IxxG8Awob0aYE+m0BCU8iGMu87Yjjivrgp4NrJ8BZrmRsoybxcwDbImDw2WRIf9LeRFJGsfOjUPjYqa1M4FkPevkq4FXZoMmQs29o9Dg8l9B6KUM38cCmy8W+61P35WCqJOycfUp5aVL86t3/1MJNMIKx1apISHd4Hjq9GyxUuI68bTdeYf+s6VPp9Dv5ueYV6dGYInGWSfjS+JleEKwr2p5+dV3iLrygabEX1r7c/5X17U6pSSuBtMliz4LVuyqDr0WVGqSc+8WIRIkSsCqZKEURWtRzzJ5o/Ab0vgZ+GqtsEg0IgK6bUDLOPd5OvHtl0g6svJzn57L0pM50xBMUwWJvPHQoQ297AYvwp0OPilbxp5ZJxipFfT2oA1FFoesN0v5mLB0J0REvb2DujoBw5LwTxLYqrqGq3IPj0Q8or9947DaDydnCdzQTfZ8rcNIHXCTSg/m1YPxMdsWTiMDYKERXmLR1hx1Qgw21FRY8OcVQMJE="
+after_success:
+  - git clone $LEX_DEPLOY $DEPLOY_ROOT && $DEPLOY_ROOT/maven_repo "gradle publish"
+notifications:
+  email: false

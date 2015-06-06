@@ -17,12 +17,32 @@ buildscript {
 }
 plugins {
     id 'java'
+
     id 'idea'
     id 'eclipse'
+
+    id 'maven-publish'
 }
 
 project('LiteLoader') {
     apply from: rootProject.file('liteloader.gradle')
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar
+
+            repositories {
+                maven {
+                    url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?:
+                            "$buildDir/repo"
+                }
+            }
+        }
+    }
 }
 
 task wrapper(type: Wrapper) {
