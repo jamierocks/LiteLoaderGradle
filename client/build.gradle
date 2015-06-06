@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'forge'
+            url = 'http://files.minecraftforge.net/maven'
+        }
+        maven {
+            name = 'minecrell-snapshots'
+            url = 'http://repo.minecrell.net/snapshots'
+        }
+    }
+    dependencies {
+        classpath 'net.minecrell:VanillaGradle:1.0.1-SNAPSHOT'
+    }
+}
+apply plugin: 'java'
+apply plugin: 'net.minecrell.vanilla.base'
+
+minecraft {
+    version = '1.7.10'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'LiteLoader/LiteLoader/trunk/java/client'
+        }
+    }
+}
+
+dependencies {
+    compile project(':common')
+}

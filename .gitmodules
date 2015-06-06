@@ -1,0 +1,3 @@
+[submodule "LiteLoader"]
+	path = LiteLoader
+	url = https://gitlab.com/jamierocks/LiteLoaderMirror.git
