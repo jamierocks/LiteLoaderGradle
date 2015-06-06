@@ -14,7 +14,13 @@ buildscript {
         classpath 'net.minecrell:VanillaGradle:1.0.1-SNAPSHOT'
     }
 }
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+
+    id 'com.github.johnrengelman.shadow' version '1.2.1'
+}
 
 project('LiteLoader') {
     apply from: rootProject.file('liteloader.gradle')

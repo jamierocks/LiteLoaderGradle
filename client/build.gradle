@@ -3,9 +3,20 @@ apply plugin: 'net.minecrell.vanilla.base'
 
 apply from: file('../gradle/minecraft.gradle')
 
-dependencies {
-    compile project(':common')
+configurations {
+    shadow
 }
+
+dependencies {
+    shadow project(':common')
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+
+    classifier ''
+}
+assemble.dependsOn shadowJar
 
 sourceSets {
     main {

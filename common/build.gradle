@@ -3,6 +3,11 @@ apply plugin: 'net.minecrell.vanilla.base'
 
 apply from: file('../gradle/minecraft.gradle')
 
+shadowJar {
+    classifier ''
+}
+assemble.dependsOn shadowJar
+
 sourceSets {
     main {
         java {
