@@ -13,15 +13,12 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecrell:VanillaGradle:1.0.1-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
     }
 }
 plugins {
     id 'java'
     id 'idea'
     id 'eclipse'
-
-    id 'com.github.johnrengelman.shadow' version '1.2.1'
 }
 
 project('LiteLoader') {

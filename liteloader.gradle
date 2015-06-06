@@ -1,29 +1,121 @@
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'forge'
+            url = 'http://files.minecraftforge.net/maven'
+        }
+        maven {
+            name = 'sonatype'
+            url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+        maven {
+            name = 'minecrell'
+            url = 'http://repo.minecrell.net/snapshots'
+        }
+    }
+    dependencies {
+        classpath 'net.minecrell:VanillaGradle:1.0.2-SNAPSHOT'
+    }
+}
 apply plugin: 'net.minecrell.vanilla.base'
 
-apply from: file('../gradle/minecraft.gradle')
+group = 'com.mumfrey'
+archivesBaseName = 'LiteLoader'
+version = '1.8.0_00'
+
+ext.author = 'Mumfrey'
+
+minecraft {
+    version = '1.8'
+    mappings = 'snapshot_20150527'
+}
 
 dependencies {
-    compile project(':client')
+    compile 'org.ow2.asm:asm-debug-all:5.0.3'
+    compile 'net.minecraft:launchwrapper:1.11'
 }
-
-shadowJar {
-    dependencies {
-        include project(':client')
-    }
-
-    classifier ''
-}
-assemble.dependsOn shadowJar
 
 sourceSets {
-    main {
+    common {
+        compileClasspath += main.compileClasspath
         java {
-            srcDir 'LiteLoader/trunk/debug'
+            srcDir 'LiteLoader/trunk/java/common'
         }
         resources {
             srcDir 'LiteLoader/trunk/resources'
         }
     }
+    client {
+        compileClasspath += common.compileClasspath + common.output
+        java {
+            srcDir 'LiteLoader/trunk/java/client'
+        }
+    }
+    debug {
+        compileClasspath += client.compileClasspath + client.output
+        java {
+            srcDir 'LiteLoader/trunk/debug'
+        }
+    }
 }
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['-Xlint:none', '-XDignore.symbol.file']
+}
+
+ext.manifest = [
+        'Built-By': 'ForgeGradle (http://minecraftforge.net)',
+        'Implementation-Vendor': author,
+        'Implementation-Title': archivesBaseName,
+        'Implementation-Version': version,
+        'TweakClass': 'com.mumfrey.liteloader.launch.LiteLoaderTweaker',
+        'TweakName': archivesBaseName,
+        'TweakVersion': version,
+        'TweakAuthor': author
+]
+
+jar {
+    from sourceSets.common.output
+    from sourceSets.client.output
+
+    manifest {
+        attributes project.manifest
+    }
+}
+
+task jarMcp(type:Jar) {
+    from sourceSets.common.output
+    from sourceSets.client.output
+    from sourceSets.debug.output
+
+    manifest {
+        attributes project.manifest
+    }
+
+    classifier = 'mcpnames'
+}
+
+task jarSrc(type:Jar) {
+    from sourceSets.common.allSource
+    from sourceSets.client.allSource
+    from sourceSets.debug.allSource
+
+    classifier = 'sources'
+}
+
+javadoc {
+    source sourceSets.common.allJava
+    source sourceSets.client.allJava
+    failOnError = false
+}
+
+task jarDoc(type:Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+
+    classifier = 'javadoc'
+}
+
+artifacts.archives jarMcp, jarSrc, jarDoc
+
+reobf.setSrgMcp()
