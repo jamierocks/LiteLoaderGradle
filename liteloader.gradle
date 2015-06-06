@@ -26,6 +26,9 @@ version = '1.8.0_00'
 
 ext.author = 'Mumfrey'
 
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
 minecraft {
     version = '1.8'
     mappings = 'snapshot_20150527'
