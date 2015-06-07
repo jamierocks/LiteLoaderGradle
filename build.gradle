@@ -134,11 +134,11 @@ publishing {
 
             artifact jarMcp
         }
-        repositories {
-            maven {
-                url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?:
-                        "$buildDir/repo"
-            }
+    }
+    repositories {
+        maven {
+            url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?:
+                    "$buildDir/repo"
         }
     }
 }
