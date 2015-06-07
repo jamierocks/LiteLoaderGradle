@@ -26,6 +26,7 @@ archivesBaseName = 'LiteLoader'
 version = '1.8.0_00'
 
 ext.author = 'Mumfrey'
+ext.mcpVersion = version + '-mcpnames'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -122,18 +123,21 @@ task jarDoc(type:Jar, dependsOn: javadoc) {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        mavenJar(MavenPublication) {
             artifactId archivesBaseName
 
             from components.java
+        }
+        mavenMcpJar(MavenPublication) {
+            artifactId archivesBaseName
+            version ext.mcpVersion
 
             artifact jarMcp
-
-            repositories {
-                maven {
-                    url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?:
-                            "$buildDir/repo"
-                }
+        }
+        repositories {
+            maven {
+                url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?:
+                        "$buildDir/repo"
             }
         }
     }
