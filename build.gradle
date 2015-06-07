@@ -131,7 +131,7 @@ publishing {
             artifact jarSrc
             artifact jarDoc
         }
-        mavenJar(MavenPublication) {
+        mavenMcpJar(MavenPublication) {
             artifactId archivesBaseName
             version rootProject.ext.mcpVersion
 
