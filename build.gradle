@@ -24,9 +24,9 @@ apply plugin: 'maven-publish'
 group = 'com.mumfrey'
 archivesBaseName = 'LiteLoader'
 version = '1.8.0_00'
-mcpVersion = version + '-mcpnames'
 
 ext.author = 'Mumfrey'
+ext.mcpVersion = version + '-mcpnames'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -130,7 +130,7 @@ publishing {
         }
         mavenMcpJar(MavenPublication) {
             artifactId archivesBaseName
-            version mcpVersion
+            version rootProject.ext.mcpVersion
 
             artifact jarMcp
         }
