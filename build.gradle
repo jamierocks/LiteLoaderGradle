@@ -123,13 +123,16 @@ task jarDoc(type:Jar, dependsOn: javadoc) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId archivesBaseName
+
             from components.java
 
             artifact jarMcp
 
             repositories {
                 maven {
-                    url = System.getenv('REPO') ?: "$buildDir/repo"
+                    url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?:
+                            "$buildDir/repo"
                 }
             }
         }
