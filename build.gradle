@@ -26,7 +26,6 @@ archivesBaseName = 'LiteLoader'
 version = '1.8.0_00'
 
 ext.author = 'Mumfrey'
-ext.mcpVersion = version + '-mcpnames'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -127,12 +126,10 @@ publishing {
             artifactId archivesBaseName
 
             from components.java
-        }
-        mavenMcpJar(MavenPublication) {
-            artifactId archivesBaseName
-            version rootProject.ext.mcpVersion
 
             artifact jarMcp
+            artifact jarSrc
+            artifact jarDoc
         }
     }
     repositories {
